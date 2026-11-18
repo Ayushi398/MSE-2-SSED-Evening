@@ -10,11 +10,13 @@ WORKDIR /app
 # Copy package files for layer caching
 COPY package.json ./
 
-# Install all dependencies (including dev, needed for build)
-RUN npm install
+# Install all dependencies (including dev, needed for Vite build)
+RUN npm install --legacy-peer-deps
 
-# Copy source files
-COPY . .
+# Copy all source files
+COPY index.html ./
+COPY vite.config.js ./
+COPY src/ ./src/
 
 # Build the production static assets
 RUN npm run build
