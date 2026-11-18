@@ -5,3 +5,5 @@ coverage
 dist
 *.pdf
 screenshots/
+
+build_examination_pdf.py
