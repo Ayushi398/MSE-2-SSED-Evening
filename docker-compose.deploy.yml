@@ -1,6 +1,7 @@
-﻿services:
+services:
   frontend:
-    image: beelu32/taskflow-frontend:v1
+    image: beelu32/taskflow-frontend:latest
+    container_name: taskflow-frontend
     ports:
       - "8081:80"
     depends_on:
@@ -11,7 +12,8 @@
     restart: unless-stopped
 
   backend:
-    image: beelu32/taskflow-backend:v1
+    image: beelu32/taskflow-backend:latest
+    container_name: taskflow-backend
     ports:
       - "3000:3000"
     environment:
@@ -40,6 +42,7 @@
 
   postgres:
     image: postgres:16-alpine
+    container_name: taskflow-postgres
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -60,6 +63,7 @@
 
   redis:
     image: redis:7-alpine
+    container_name: taskflow-redis
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 10s
@@ -69,9 +73,11 @@
       - taskflow-network
     restart: unless-stopped
 
+# Named volume for PostgreSQL data persistence
 volumes:
   postgres_data:
 
+# Custom Docker network for container communication
 networks:
   taskflow-network:
     driver: bridge
