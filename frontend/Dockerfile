@@ -3,7 +3,7 @@
 # ──────────────────────────────────────────────
 
 # Stage 1: Build the React/Vite application
-FROM node:20-alpine AS build
+FROM node:20-slim AS build
 
 WORKDIR /app
 
@@ -11,7 +11,7 @@ WORKDIR /app
 COPY package.json ./
 
 # Install all dependencies (including dev, needed for Vite build)
-RUN npm install --legacy-peer-deps
+RUN npm install
 
 # Copy all source files
 COPY index.html ./
